@@ -1,6 +1,7 @@
 use std::net::TcpListener;
 use std::net::TcpStream;
 use std::io::prelude::*;
+use std::env;
 
 /// Look up our server port number in PORT, for compatibility with Heroku.
 fn get_server_port() -> u16 {
@@ -8,7 +9,7 @@ fn get_server_port() -> u16 {
 }
 
 fn main() {
-    let listener = TcpListener::bind("127.0.0.1:".to_owned() + get_server_port()).unwrap();
+    let listener = TcpListener::bind("127.0.0.1:".to_owned() + get_server_port().to_string().as_str()).unwrap();
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
