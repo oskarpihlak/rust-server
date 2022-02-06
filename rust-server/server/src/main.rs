@@ -1,7 +1,6 @@
 use std::net::TcpListener;
 use std::net::TcpStream;
 use std::io::prelude::*;
-use std::fs;
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -16,6 +15,7 @@ fn handle_connection(mut stream: TcpStream) {
     let mut buffer = [0; 1024];
     stream.read(&mut buffer).unwrap();
     let get = b"GET";
+    let post = b"POST";
 
     for x in buffer {
         println!("{} ", x);
@@ -26,10 +26,14 @@ fn handle_connection(mut stream: TcpStream) {
     let asd = string.split_whitespace().collect::<Vec<&str>>();
 
     let (status_line, filename) = if buffer.starts_with(get) {
-
-        ("HTTP/1.1 200 OK", "{\"status\": \"200, message\": \"OK\", \"content\":".to_owned()+ asd.get(1).unwrap() + " }")
+        let x3 = asd.get(1).unwrap();
+        ("HTTP/1.1 200 OK", "{\"status\": \"200\", \"message\": \"OK\", \"content\":".to_owned()+ x3 + " }")
+    } else if buffer.starts_with(post) {
+        let x2 = byte_stream_string.get(byte_stream_string.len() - 1).unwrap().trim_matches(char::from(0));
+        ("HTTP/1.1 201 CREATED", "{\"status\": \"201\", \"message\": \"CREATED\", \"content\": \"".to_owned()+ x2 + "\" }")
     } else {
-        ("HTTP/1.1 200 OK", "{\"status\": \"200, message\": \"OK\", \"content\":".to_owned()+ asd.get(1).unwrap() + " }")
+        let x1 = byte_stream_string.get(byte_stream_string.len() - 1).unwrap();
+        ("HTTP/1.1 418 I'M A TEAPOT", "{\"status\": \"418, message\": \"I'M A TEAPOT\", \"content\":".to_owned()+ x1 + " }")
     };
 
     let contents = filename; //fs::read_to_string(filename).unwrap();
