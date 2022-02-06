@@ -25,10 +25,6 @@ fn handle_connection(mut stream: TcpStream) {
     let get = b"GET";
     let post = b"POST";
 
-    for x in buffer {
-        println!("{} ", x);
-    }
-
     let byte_stream_string = std::str::from_utf8(&buffer).unwrap().split("\r\n").collect::<Vec<&str>>();
     let string = format!("{}", byte_stream_string.get(0).unwrap());
     let asd = string.split_whitespace().collect::<Vec<&str>>();
