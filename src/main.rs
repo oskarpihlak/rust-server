@@ -9,7 +9,7 @@ fn get_server_port() -> u16 {
 }
 
 fn main() {
-    let string = "127.0.0.1:".to_owned() + get_server_port().to_string().as_str();
+    let string = "0.0.0.0:".to_owned() + get_server_port().to_string().as_str();
     println!("{}", string);
     let listener = TcpListener::bind(string).unwrap();
 
