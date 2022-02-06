@@ -23,7 +23,7 @@ RUN adduser \
 
 WORKDIR /myapp
 
-COPY ./ .
+COPY rust-server .
 
 RUN cargo build --target x86_64-unknown-linux-musl --release
 
