@@ -34,7 +34,8 @@ fn handle_connection(mut stream: TcpStream) {
         ("HTTP/1.1 200 OK", "{\"status\": \"200\", \"message\": \"OK\", \"content\":".to_owned() + x3 + " }")
     } else if buffer.starts_with(post) {
         let x2 = byte_stream_string.get(byte_stream_string.len() - 1).unwrap().trim_matches(char::from(0));
-        ("HTTP/1.1 201 CREATED", "{\"status\": \"201\", \"message\": \"CREATED\", \"Content-Length\": \"".to_owned() + &x2.len().to_string().as_str() + "\", \"content\": \"" + x2 + "\" }")
+        let x22 = byte_stream_string.get(byte_stream_string.len() - 3).unwrap().trim_matches(char::from(0));
+        ("HTTP/1.1 201 CREATED", "{\"status\": \"201\", \"message\": \"CREATED\", \"Content-Length2\": \"".to_owned() + &x2.len().to_string().as_str() + "\", \"content\": \"" + x2 + "\" } \n" + x22)
     } else {
         let x1 = byte_stream_string.get(byte_stream_string.len() - 1).unwrap();
         ("HTTP/1.1 418 I'M A TEAPOT", "{\"status\": \"418, message\": \"I'M A TEAPOT\", \"content\":".to_owned() + x1 + " }")
