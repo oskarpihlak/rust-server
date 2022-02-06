@@ -13,8 +13,6 @@ fn main() {
     println!("{}", string);
     let listener = TcpListener::bind(string).unwrap();
 
-
-
     for stream in listener.incoming() {
         let stream = stream.unwrap();
         handle_connection(stream);
